@@ -64,13 +64,13 @@ function App() {
     { addEventPopUp ? (
       <div className="addEventPopUp">
       <body>
-        <label>Event name</label><br/>
-        <input type='text'></input><br/>
-        <label>Start Date</label><br/>
-        <input type='datetime-local'></input><br/>
-        <label>End Date</label><br/>
-        <input type='datetime-local'></input><br/>
-        <button>Add event</button>
+        <label className='lbl1'>Event name</label><br/>
+        <input className='inp1' type='text'></input><br/>
+        <label className='lbl2'>Start Date</label><br/>
+        <input className='inp2' type='datetime-local'></input><br/>
+        <label className='lbl3'>End Date</label><br/>
+        <input className='inp3' type='datetime-local'></input><br/>
+        <button className='btn1'>Add event</button>
       </body>
       
     </div>
