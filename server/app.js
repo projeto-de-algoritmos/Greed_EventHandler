@@ -27,10 +27,16 @@ function solve(events) {
   const ans = [events[0]];
   let last = events[0].ee;
 
-  for(let i = 1; i < events.lenght; i++) {
-    if(ord.ei < last) continue;
-    ans.push(ord[i]);
-    last = ord[i].ee;
+  console.log(`events = \n:${JSON.stringify(events, null, 2)}`);
+
+
+  for(let i = 1; i < events.length; i++) {
+    console.log(`last = ${last}, events[i] = ${JSON.stringify(events[i])}`);
+    if(events[i].ei < last) {
+      continue;
+    }
+    ans.push(events[i]);
+    last = events[i].ee;
   }
 
   return ans;
@@ -47,19 +53,18 @@ server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 
   const events = [
-    new Event(13, 15, '1'),
-    new Event(12, 15, '2'),
-    new Event(14, 20, '3'),
-    new Event(11, 17, '4'),
-    new Event(11, 20, '5'),
+    new Event(1, 4, '1'),
+    new Event(3, 4, '2'),
+    new Event(4, 7, '3'),
+    new Event(2, 4, '4'),
+    new Event(4, 5, '5'),
+    new Event(5, 6, '6'),
+    new Event(7, 8, '7'),
+    new Event(2, 5, '8')
   ];
   
-  console.log("MEU ARRAY");
-  console.log(events);
-  
-  var ans = [];
-  ans = solve(events);
-  console.log("RESPOSTA");
-  console.log(ans);
+  const ans = solve(events);
+
+  console.log(`ans = \n:${JSON.stringify(ans, null, 2)}`);
 
 });
