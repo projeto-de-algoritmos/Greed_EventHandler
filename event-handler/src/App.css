@@ -28,6 +28,12 @@
   color: #61dafb;
 }
 
+.addButton {
+  display: flex;
+  justify-content: flex-end;
+  direction: row;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
