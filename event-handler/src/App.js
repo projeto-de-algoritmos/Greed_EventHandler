@@ -1,9 +1,8 @@
 import './App.css';
 import { Calendar, momentLocalizer  } from 'react-big-calendar';
+import { useState } from 'react';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import moment from 'moment';
-
-const localizer = momentLocalizer(moment);
 
 const myEvents = [{
     id: 0,
@@ -38,12 +37,47 @@ const myEvents = [{
 ]
 
 function App() {
+  const localizer = momentLocalizer(moment);
+
+  const [addEventPopUp, setAddEventPopUp] = useState(false);
+
+  const addEvent = (startDate: Date, endDate: Date, title: String) => {
+    const newEvent = {id: myEvents.length-1, title: title, start: startDate, end: endDate}
+    myEvents.push(newEvent);
+    console.log(myEvents.length);
+  }
+
+  const openPopUp = () => {
+    if (!addEventPopUp) {
+      setAddEventPopUp(true);
+    } else {
+      setAddEventPopUp(false);
+    }
+  }
+
+
   return (
     <>
-    <div className="addButton">
-      Hi
+    <div className="addButton" onClick={() => openPopUp()}>
+      +
     </div>
-    <div className="App">
+    { addEventPopUp ? (
+      <div className="addEventPopUp">
+      <body>
+        <label>Event name</label><br/>
+        <input type='text'></input><br/>
+        <label>Start Date</label><br/>
+        <input type='datetime-local'></input><br/>
+        <label>End Date</label><br/>
+        <input type='datetime-local'></input><br/>
+        <button>Add event</button>
+      </body>
+      
+    </div>
+    ) : (
+      null
+    )}
+    <div className="App" onClick={()=>setAddEventPopUp(false)}>
       <Calendar localizer={localizer} events={myEvents} showMultiDayTimes step={30}/>
     </div>
     </>
