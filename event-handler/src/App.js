@@ -35,13 +35,31 @@ const myEvents = [{
     end: new Date(2021, 8, 6, 18, 0),
   },
   {
-    id: 5,
-      title: 'Movie Night 2',
+  id: 5,
+    title: 'Movie Night 1',
+    start: new Date(2021, 8, 6, 18, 0),
+    end: new Date(2021, 8, 6, 21, 0),
+  },
+  {
+    id: 6,
+    title: 'Movie Night 2',
+    start: new Date(2021, 8, 6, 14, 0),
+    end: new Date(2021, 8, 6, 18, 0),
+  },
+  {
+    id: 7,
+      title: 'Movie Night 3',
       start: new Date(2021, 8, 6, 11, 0),
       end: new Date(2021, 8, 6, 19, 0),
     },
   {
-  id: 6,
+  id: 8,
+    title: 'Movie Night 4',
+    start: new Date(2021, 8, 6, 21, 0),
+    end: new Date(2021, 8, 6, 22, 0),
+  },
+  {
+  id: 9,
     title: 'Pair programming with Tom',
     start: new Date(2021, 8, 8),
     end: new Date(2021, 8, 8),
@@ -98,19 +116,28 @@ function solve(events) {
     ans.push(events[i]);
     last = events[i].end.getTime();
   }
-
+   
   return ans;
 
 }
 
+let dayEvents = getDayEvents(myEvents);
+
 function App() {
+
+  
+  const [eventsToShow, setEventsToShow] = useState(myEvents);
+
+
   const localizer = momentLocalizer(moment);
+
 
   const [addEventPopUp, setAddEventPopUp] = useState(false);
 
   const addEvent = (startDate: Date, endDate: Date, title: String) => {
     const newEvent = {id: myEvents.length-1, title: title, start: startDate, end: endDate}
-    myEvents.push(newEvent);
+    const newEvents = eventsToShow;
+    
     console.log(myEvents.length);
   }
   console.log(myEvents[0]);
@@ -123,38 +150,55 @@ function App() {
   }
 
   useEffect(() => {
-    let dayEvents = getDayEvents(myEvents);
-    console.log("flag:");
-    console.log(dayEvents);
-    let solvedEvents = solve(dayEvents);
-    console.log("eventos organizados");
-    console.log(solvedEvents);
+
   }, []);
+
+  function onClickSort() {
+    const allEvents = myEvents.slice().reduce((all, event) => {
+      const isEventToday = dayEvents.find((dayEvent) => {
+        return dayEvent.id === event.id
+      });
+
+      if(!isEventToday) {
+        all.push(event);
+      }
+
+      return all;
+    }, []);
+
+    allEvents.push(...solve(dayEvents));
+    setEventsToShow(allEvents);
+  }
 
   return (
     <>
-    <div className="addButton" onClick={() => openPopUp()}>
+    <div className="addButton" onClick={() => setAddEventPopUp(true)}>
       +
     </div>
+    <div className="sortButton" onClick={onClickSort}>
+      Sort
+    </div>
+    
     { addEventPopUp ? (
       <div className="addEventPopUp">
       <body>
+        <label className='exit' onClick={() => setAddEventPopUp(false)}>x</label>
         <label className='lbl1'>Event name</label><br/>
-        <input className='inp1' type='text'></input><br/>
+        <input className='inp1' type='text' id='1'></input><br/>
         <label className='lbl2'>Start Date</label><br/>
-        <input className='inp2' type='datetime-local'></input><br/>
+        <input className='inp2' type='datetime-local' id='2'></input><br/>
         <label className='lbl3'>End Date</label><br/>
-        <input className='inp3' type='datetime-local'></input><br/>
-        <button className='btn1'>Add event</button>
+        <input className='inp3' type='datetime-local' id='3'></input><br/>
+        <button className='btn1' onClick={() => addEvent(document.getElementById('2'), document.getElementById('3'), document.getElementById('1'))}>Add event</button>
       </body>
       
     </div>
     ) : (
       null
     )}
-    <div className="App" onClick={()=>setAddEventPopUp(true)}>
-      <Calendar localizer={localizer} events={myEvents} showMultiDayTimes step={30}/>
-      {console.log(myEvents[0])}
+    <div className="App" onClick={()=>setAddEventPopUp(false)}>
+      <Calendar localizer={localizer} events={eventsToShow} showMultiDayTimes step={30}/>
+     
     </div>
     
     </>

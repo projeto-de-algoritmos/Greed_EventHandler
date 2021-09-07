@@ -13,6 +13,18 @@
   }
 }
 
+.lbl1 {
+  margin-left: 10%;
+}
+
+.lbl2 {
+  margin-left: 10%;
+}
+
+.lbl3 {
+  margin-left: 10%;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -45,9 +57,32 @@
   cursor: pointer;
 }
 
+.sortButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  margin-left: 94%;
+  direction: row;
+  height: 30px;
+  width: 60px;
+  background-color: #3174ad;
+  color: white;
+  border-radius: 10px;
+  z-index: 3;
+  cursor: pointer;
+}
+
 .addButton:hover {
   opacity: 70%;
   
+}
+
+.exit {
+  position: absolute;
+  margin-left: 93%;
+  margin-top: -8%;
 }
 
 .addEventPopUp {
@@ -59,7 +94,7 @@
   position: absolute;
   left: 82%;
   top: 5%;
-  z-index: 4;
+  z-index: 6;
   border-radius: 12px;
   background-color: rgb(167, 167, 167);
 }
